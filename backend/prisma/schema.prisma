@@ -11,13 +11,54 @@ datasource db {
 }
 
 model Users {
-  id         Int      @id @default(autoincrement())
-  nome       String   @unique
-  telefone   String
-  email      String?
-  password   String
-  created_at DateTime @default(now())
-  update_at  DateTime @default(now())
+  id            Int            @id @default(autoincrement())
+  nome          String
+  telefone      String?
+  email         String         @unique
+  password      String
+  created_at    DateTime       @default(now())
+  update_at     DateTime       @default(now())
+  transaction   Transactions[]
+  payment_items PaymentItems[]
 
   @@map("user")
+}
+
+model Transactions {
+  id             Int      @id @default(autoincrement())
+  userId         Int
+  transactionId  String
+  status         String?
+  paymentType    String
+  amount         Float
+  createdAt      String?
+  expiresAt      String?
+  qrCodeBase64   String?
+  qrCodeLink     String?
+  urlPayment     String?
+  url_sandbox    String?
+  url_production String?
+  created_at     DateTime @default(now())
+  update_at      DateTime @default(now())
+  User           Users    @relation(fields: [userId], references: [id]) // Relacionamento com Users
+
+  @@unique([transactionId])
+  @@map("transation")
+}
+
+model PaymentItems {
+  id            Int      @id @default(autoincrement())
+  userId        Int
+  transactionId String
+  status        String
+  title         String
+  amount        Float
+  description   String?
+  quantity      Int?
+  unit_price    Float?
+  created_at    DateTime @default(now())
+  update_at     DateTime @default(now())
+  User          Users    @relation(fields: [userId], references: [id])
+
+  @@map("paymentItem")
 }

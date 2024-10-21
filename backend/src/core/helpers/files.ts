@@ -2,7 +2,7 @@ import fs from 'fs'
 import logSystem from '../config/Logs'
 
 
-class FileMaster {    
+class FileMaster {
 
     ready(pathFile:string){
         if (fs.existsSync(pathFile)) {

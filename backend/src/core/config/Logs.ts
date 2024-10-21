@@ -20,21 +20,21 @@ function logSave(data:any){
 class Logs {
     async success(data: any){        
         if(configSystem.logControll.savaArquiveLogs){
-            const l= `${dataCurrent.formatarDataHoraAtual()} [ SUCCESS ] ---> ${data}\n` 
+            const l= `${dataCurrent.formatarDataHoraAtual()} [ SUCCESS ] ---> ${JSON.stringify(data)}\n` 
             logSave(l)
         }
 
         if(!configSystem.logControll.success) return
-        console.log(`[ SUCCESS ]\n ${data}`)
+        console.log(`[ SUCCESS ] --> ${JSON.stringify(data)}`)
     }
 
     error(data:any){
         if(configSystem.logControll.savaArquiveLogs){
-            const l= `${dataCurrent.formatarDataHoraAtual()} [ ERROR ] ---> ${data}\n`
+            const l= `${dataCurrent.formatarDataHoraAtual()} [ ERROR ] ---> ${JSON.stringify(data)}\n`
             logSave(l)
         }
         if(!configSystem.logControll.error) return
-        console.error(`[ ERROR ]\n ${data}`)
+        console.error(`[ ERROR ] --> ${JSON.stringify(data)}`)
     }
 }
  

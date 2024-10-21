@@ -2,7 +2,7 @@ import bcrypt  from 'bcrypt'
 import configSystem from "../config/configSystem"
 
 
-module.exports= {
+const bcriptHash= {
     compare: ( password:string, passHash:string )=>{
         const result = bcrypt.compare(password, passHash)
         return result
@@ -14,3 +14,4 @@ module.exports= {
         return encrip
     }
 }
+export default bcriptHash

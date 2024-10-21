@@ -15,8 +15,8 @@ export interface IUserInterface {
 
 export interface IUserCreateDto {
     nome: string
-    telefone: string
-    email?: string
+    telefone?: string
+    email: string
     password: string
 }
 
@@ -30,11 +30,12 @@ export interface IUserUpdateDto {
 export interface IUserOutputDto {
     id: number;
     nome: string;
-    telefone: string;
-    email: string | null;
+    telefone: string | null;
+    email: string ;
     password: string;
     created_at: Date;
     update_at: Date;
 }
+
 
 export type IUserIdDto = string | number

@@ -1,7 +1,7 @@
 import cron from 'node-cron'
 import fs from 'fs'
 import logSystem from '../config/Logs';
-const path = require('path');
+import  path from 'path'
 
 
 // --------------------------------------------------------------------

@@ -1,7 +1,7 @@
 import { Router } from 'express'
 import UserController from '../controllers/UserController'
 import UserMiddleware from '../middleware/UserMiddleware'
-import OauthJwt from '../controllers/Oauth-jwt'
+import OauthJwt from '../middleware/Oauth-jwt'
 import login from '../middleware/LoginMiddleware'
 
 

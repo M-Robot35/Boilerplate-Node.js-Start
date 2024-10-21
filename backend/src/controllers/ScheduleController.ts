@@ -9,7 +9,7 @@ class SchenduleController {
     async add(req:Request, res:Response ){
         const result= new ResponseExpress(res)
         const { nome, password, telefone, email}= req.body
-        //const { id } = req.userId
+        //const { id } = req.user
 
         const sc= new Schendule('22')
         sc.schenduleAdd('', 'USER_ALL' )
@@ -21,7 +21,7 @@ class SchenduleController {
     async start(req:Request, res:Response ){
         const result= new ResponseExpress(res)
         const { nome, password, telefone, email}= req.body        
-        //const { id } = req.userId
+        //const { id } = req.user
 
         const sc= new Schendule('22')
         sc.schenduleStart('USER_ALL')
@@ -34,7 +34,7 @@ class SchenduleController {
     async stop(req:Request, res:Response ){
         const result= new ResponseExpress(res)
         const { nome, password, telefone, email}= req.body   
-        //const { id } = req.userId   
+        //const { id } = req.user   
         
         
         const sc= new Schendule('22')
@@ -48,7 +48,7 @@ class SchenduleController {
     async remove(req:Request, res:Response ){
         const result= new ResponseExpress(res)
         const { nome, password, telefone, email}= req.body
-        //const { id } = req.userId
+        //const { id } = req.user
 
         const sc= new Schendule('22')
         sc.schenduleRemove('USER_ALL')
@@ -61,7 +61,7 @@ class SchenduleController {
     async all(req:Request, res:Response ){
         const result= new ResponseExpress(res)
         const { nome, password, telefone, email}= req.body
-        //const { id } = req.userId
+        //const { id } = req.user
 
 
         result.notContent()

@@ -35,6 +35,6 @@ export default class ResponseExpress{
     }
 
     server_error<T=any>( data: T, message:string): Response {        
-        return this.response.status(statusResponse.NOT_FOUND).json(sender<T>(data, message, true))
+        return this.response.status(statusResponse.SERVER_ERROR).json(sender<T>(data, message, true))
     }
 }

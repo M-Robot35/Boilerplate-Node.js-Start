@@ -5,7 +5,6 @@ import path from 'path'
 import configSystem from "./core/config/configSystem"
 import logSystem from "./core/config/Logs"
 
-
 if(configSystem.cluster){
     const pathFile= path.join(__dirname, 'server.js')
 

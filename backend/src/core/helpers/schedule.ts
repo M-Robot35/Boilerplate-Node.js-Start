@@ -1,7 +1,7 @@
 import fs from 'fs'
 import logSystem from '../config/Logs';
 import * as path from 'path';
-import { ICronInterface } from '../dto/scheduleDTO';
+import { ICronInterface } from '../dto/scheduleDto';
 import cron from 'node-cron'
 import FileMaster from './files'
 
@@ -82,7 +82,7 @@ export default class Schendule {
             active: true,
             params: params ?? null,
             fn: fn ?? null,
-        }        
+        }
 
         schedules[this.userId][cronName] = scheduleEntry;        
 
@@ -115,7 +115,10 @@ export default class Schendule {
             const scheduleEntry = schedules[this.userId][cronName];
             
             if (!scheduleEntry.active) {
-                if(!scheduleEntry.cron) return console.log('schenduleStart not cron', scheduleEntry)
+                if(!scheduleEntry.cron){
+                    logSystem.error(`schenduleStart not cron -- ${scheduleEntry}`)
+                    return
+                } 
                 scheduleEntry.cron?.start();
                 scheduleEntry.active = true;
                 this.salve(); // Atualizar o estado no arquivo JSON
@@ -136,7 +139,10 @@ export default class Schendule {
             const scheduleEntry = schedules[this.userId][cronName];
             
             if (scheduleEntry.active) {
-                if(!scheduleEntry.cron) return console.log('schenduleStop not cron', scheduleEntry)
+                if(!scheduleEntry.cron) {
+                    logSystem.error(`schenduleStop not cron -- ${scheduleEntry}`)
+                    return
+                }
                 scheduleEntry.cron.stop();
                 scheduleEntry.active = false;
                 this.salve(); // Atualizar o estado no arquivo JSON
@@ -156,7 +162,7 @@ export default class Schendule {
     schenduleRemove(cronName: AvailableFunctionNames): void {
         if (schedules[this.userId] && schedules[this.userId][cronName]) {
             const scheduleEntry = schedules[this.userId][cronName];
-            if(!scheduleEntry.cron) return console.log('schenduleRemove not cron', scheduleEntry)
+            if(!scheduleEntry.cron) return logSystem.error(`schenduleRemove not cron -- ${scheduleEntry}`)
             scheduleEntry.cron.stop();
             delete schedules[this.userId][cronName];
             this.salve(); // Salvar estado após a remoção
@@ -176,7 +182,10 @@ export default class Schendule {
             for (const cronName in schedules[this.userId]) {
                 const scheduleEntry = schedules[this.userId][cronName];
                 if (!scheduleEntry.active) {
-                    if(!scheduleEntry.cron) return console.log('schenduleStartAll not cron', scheduleEntry)
+                    if(!scheduleEntry.cron) {
+                        logSystem.error(`schenduleStartAll not cron  --  ${scheduleEntry}`)
+                        return
+                    }
                     scheduleEntry.cron.start();
                     scheduleEntry.active = true;
                     logSystem.success(`Cron job '${cronName}' do usuário ${this.userId} foi iniciado.`);

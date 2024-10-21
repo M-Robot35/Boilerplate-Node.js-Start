@@ -1,14 +1,16 @@
 import { serverConfig } from './core/config/server';
 import http from 'http'
-import  express from "express";
-import  routes from "./rotas/rotas";
+import express from "express";
+import routes from "./rotas/rotas";
 import { Wss } from "./core/websocket/websocketServer";
 import logSystem from './core/config/Logs';
-
 
 const port = process.env.PORT || serverConfig.port
 
 const app = express();
+if(serverConfig.rateLimite.activeRateLimit){
+    app.use(serverConfig.rateLimite.limite);
+}
 app.use(express.json())
 app.use(serverConfig.cors);
 
@@ -18,5 +20,4 @@ const server= http.createServer(app)
 const websocket= Wss(server) 
 
 
-//console.log(formatarDataHoraAtual())
-server.listen(port,()=> logSystem.success(`Server On : PORT: ${port}`));
+server.listen(port,()=> logSystem.success(`Server On : ${serverConfig.urlBase}:${port}`));

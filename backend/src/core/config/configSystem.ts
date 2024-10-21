@@ -11,8 +11,8 @@ const configSystem= {
     },
 
     jwt: {
-        jwt_bypass: true, // desabilita jwt-token
-        secret: Env.JWT_SECRET ?? 'secret132',
+        jwt_bypass: false, // desabilita jwt-token
+        secret: Env.JWT_SECRET ?? 'dalhtkjnrçlw1310442/$\mfndfnaçl',
         expiration: Env.JWT_EXPIRATION ?? '8h'
     },
 
@@ -23,7 +23,15 @@ const configSystem= {
     websocketClient: {
         url: 'localhost:3005', // url que irá se connectar para receber os dados via wss
         delayReconnect: 10000
+    },
+
+    database: {
+        encrypId: true,
+        removeKey:{
+            remove_active: true,
+            key: ['password', "update_at"]
+        }
     }
 }
 
-export default configSystem
+export default configSystem 

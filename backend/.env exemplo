@@ -1,0 +1,18 @@
+
+DATABASE_URL="file:./dev.db"
+# DATABASE_URL="postgresql://admin:adminPass@localhost:5432/nutri_db"
+
+# -- Server --
+PORT=3000
+
+# -- jwt token
+JWT_SECRET='jçlwrfdaçljrtbhçurhggroqh[''[f]]'
+JWT_EXPIRATION='8h'
+
+# -- Criptografia --
+BCRIPT_SAULT=10  # max 10
+
+# -- Mercado Pago --
+MP_PRODUCTION=false
+MP_ACCESS_TOKEN_PROD='APP_USR-2910722' # exemplo
+MP_ACCESS_TOKEN_DEV='TEST-29107221832' # exemplo

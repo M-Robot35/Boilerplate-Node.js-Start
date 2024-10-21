@@ -20,6 +20,7 @@ npm i
 * CronJobs
 * Cluster  [ ON / OFF ]
 * Log
+* rate Limit -- https://www.npmjs.com/package/express-rate-limit
 
 # ---------------------------------------------------
 # Oque e um Boilerplate

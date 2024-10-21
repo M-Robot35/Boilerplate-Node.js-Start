@@ -1,8 +1,9 @@
 import { Request, Response, NextFunction } from "express"
 import jwt from "../core/helpers/jwt"
-import UserData from "../core/database/model-data/user"
+import UserData from "../core/database/model-data/User"
 import ResponseExpress from "../core/helpers/response-expres"
 import { z as Zod } from 'zod';
+import logSystem from "../core/config/Logs";
 
 // insira e adeque como será feito o login em sua API
 
@@ -12,7 +13,14 @@ class Login {
         const resultResponse = new ResponseExpress(res);
 
         // Validação com Zod
-        const resultZod = this.phoneSchema.safeParse(req.body);
+        const schemaLogin = Zod.object({
+            email: Zod.string()
+                .trim()
+                .email(),
+            password: Zod.string().min(8)
+        });
+
+        const resultZod= schemaLogin.safeParse(req.body)
 
         if (!resultZod.success) {
             // Se a validação falhar, formatar os erros
@@ -20,11 +28,11 @@ class Login {
             return resultResponse.notFound(formattedErrors, 'Login inválido');
         }        
         
-        const { telefone } = req.body;
+        const { email, password } = req.body;
 
         try {
             // Verifica se o usuário existe pelo telefone
-            const usuario = await UserData.find_by_telefone(telefone);
+            const usuario = await UserData.find_by_email(email);
 
             if (!usuario) {
                 return resultResponse.notFound(null, 'Token inválido');
@@ -33,22 +41,26 @@ class Login {
             // Gera o token do usuário
             const generateToken = await jwt.tokenGenerate({ id: usuario.id });
 
+            logSystem.success(`Token Create -- ${JSON.stringify(usuario)} / ${generateToken}`)
+
             return resultResponse.ok({
                 user: usuario,
                 token: generateToken
             });
 
         } catch (error) {
-            return resultResponse.server_error(null, "Ocorreu algum erro")
+            logSystem.error(`Error ao Criar Token -- ${JSON.stringify(req.body)}`)
+            return resultResponse.server_error(null, `Error ao Criar token`)
         }
     }
 
 
     // Esquema de validação para telefone
     private phoneSchema = Zod.object({
-        telefone: Zod.string()
+        email: Zod.string()
             .trim()
-            .min(11, { message: 'Quantidade de números inválidos, esperado 11 dígitos.' })
+            .email(),
+        password: Zod.string().min(8)
     });
     
 
